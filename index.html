@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>LEIU.CC - 受保護內容</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0e1a;
+    color: #e5e7eb;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .container {
+    width: 100%;
+    max-width: 420px;
+  }
+  .logo {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    color: #fff;
+  }
+  .card {
+    background: #111827;
+    border-radius: 20px;
+    padding: 28px 24px;
+    border: 1px solid #1f2937;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1e3a5f;
+    color: #60a5fa;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .badge::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #3b82f6;
+    border-radius: 50%;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  h1 span { color: #3b82f6; }
+  .desc {
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .hint-box {
+    background: #0f172a;
+    border-left: 4px solid #3b82f6;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+  .hint-label { color: #9ca3af; font-size: 13px; }
+  .hint-value { font-size: 18px; font-weight: 600; margin-top: 4px; }
+  .label { font-size: 14px; margin-bottom: 8px; color: #d1d5db; }
+  .input-wrap {
+    background: #0f172a;
+    border: 2px solid #1f2937;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    transition: border 0.2s;
+  }
+  .input-wrap:focus-within { border-color: #3b82f6; }
+  input[type="password"], input[type="text"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 4px;
+  }
+  input::placeholder { letter-spacing: 0; color: #6b7280; }
+  .btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: #2563eb;
+    color: white;
+  }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-primary:disabled { background: #1e40af; cursor: not-allowed; opacity: 0.7; }
+  .btn-secondary {
+    background: #1f2937;
+    color: #d1d5db;
+  }
+  .hidden { display: none !important; }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal {
+    background: #111827;
+    border-radius: 20px;
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    border: 1px solid #1f2937;
+  }
+  .check {
+    width: 64px;
+    height: 64px;
+    background: #065f46;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+  }
+  .modal h2 { font-size: 20px; margin-bottom: 16px; }
+  .modal p { color: #9ca3af; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+  .modal ul { text-align: left; color: #9ca3af; font-size: 14px; margin: 16px 0 24px; padding-left: 20px; }
+  .modal-btns { display: flex; gap: 12px; }
+  .modal-btns .btn { flex: 1; }
+  .age-gate {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .age-logo {
+    font-size: 80px;
+    font-weight: 900;
+    color: #ef4444;
+    margin: 20px 0;
+  }
+  .age-btns { display: flex; gap: 12px; justify-content: center; margin-top: 30px; }
+  .age-btns .btn { width: auto; padding: 14px 28px; }
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .loading h2 { font-size: 24px; margin-bottom: 16px; }
+  .loading p { color: #9ca3af; }
+  .content-area {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .video-placeholder {
+    background: #0f172a;
+    border-radius: 16px;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    border: 2px dashed #374151;
+    color: #6b7280;
+  }
+  .views { color: #6b7280; font-size: 13px; margin-top: 20px; }
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #1e40af;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <!-- Password Gate -->
+  <div id="gate">
+    <div class="logo">LEIU.CC</div>
+    <div class="card">
+      <div class="badge">受保護內容</div>
+      <h1>此內容受到<br><span>存取權限保護</span></h1>
+      <p class="desc">請輸入密碼以解鎖此頁面內容。完成解鎖後即可順暢瀏覽完整影片。</p>
+      <div class="hint-box">
+        <div class="hint-label">密碼提示</div>
+        <div class="hint-value">1111</div>
+      </div>
+      <div class="label">解鎖密碼</div>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="請輸入密碼..." maxlength="16" autocomplete="off">
+      </div>
+      <button class="btn btn-primary" id="unlockBtn" onclick="checkPassword()">驗證並解鎖內容</button>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay hidden" id="successModal">
+    <div class="modal">
+      <div class="check">✓</div>
+      <h2>密碼驗證成功！</h2>
+      <p>感謝您的支持與配合，接下來將會：</p>
+      <ul>
+        <li>為您開啟合作夥伴贊助頁面</li>
+        <li>本頁面將同步載入完整影音內容</li>
+      </ul>
+      <div class="modal-btns">
+        <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+        <button class="btn btn-primary" onclick="proceed()">我了解，繼續前往</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Age Gate -->
+  <div class="hidden" id="ageGate">
+    <div class="logo">LEIU.CC</div>
+    <div class="card age-gate">
+      <div style="color:#9ca3af; font-size:13px; margin-bottom:10px;">LURL 縮網址</div>
+      <div class="age-logo">18+</div>
+      <div class="age-btns">
+        <button class="btn btn-secondary" onclick="location.reload()">回首頁</button>
+        <button class="btn btn-primary" onclick="showLoading()">我已年滿18歲</button>
+      </div>
+      <div class="views">此短網址瀏覽次數：22345</div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="hidden" id="loading">
+    <div class="logo">LEIU.CC</div>
+    <div class="card loading">
+      <h2>準備播放！</h2>
+      <p id="countdown">影片載入中，請稍候 3 秒...</p>
+      <p style="margin-top:12px; font-size:13px;">（為確保順利載入，請先不要關閉視窗）</p>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="hidden" id="content">
+    <div class="logo">LEIU.CC</div>
+    <div class="card content-area">
+      <h2>內容已解鎖</h2>
+      <div class="video-placeholder">
+        影片播放區<br><small>（可在此嵌入你的影片）</small>
+      </div>
+      <p style="color:#9ca3af; margin-top:16px;">密碼驗證成功，內容已開放瀏覽。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const CORRECT_PASSWORD = "1111";
+
+function checkPassword() {
+  const input = document.getElementById("password").value.trim();
+  const btn = document.getElementById("unlockBtn");
+  
+  if (!input) {
+    alert("請輸入密碼");
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  
+  setTimeout(() => {
+    if (input === CORRECT_PASSWORD) {
+      document.getElementById("successModal").classList.remove("hidden");
+    } else {
+      alert("密碼錯誤，請再試一次");
+      btn.disabled = false;
+      btn.textContent = "驗證並解鎖內容";
+    }
+  }, 800);
+}
+
+function closeModal() {
+  document.getElementById("successModal").classList.add("hidden");
+  document.getElementById("unlockBtn").disabled = false;
+  document.getElementById("unlockBtn").textContent = "驗證並解鎖內容";
+}
+
+function proceed() {
+  document.getElementById("successModal").classList.add("hidden");
+  
+  // 用建立連結的方式開新分頁（iOS Safari 較不容易被擋）
+  const link = document.createElement("a");
+  link.href = "https://s.shopee.tw/80ECHwNHjV";
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  // 原本的網頁繼續前往到指定連結
+  setTimeout(() => {
+    window.location.href = "https://lurl.cc/Jwkjn";
+  }, 300);
+}
+
+function showLoading() {
+  document.getElementById("ageGate").classList.add("hidden");
+  document.getElementById("loading").classList.remove("hidden");
+  
+  let sec = 3;
+  const el = document.getElementById("countdown");
+  const timer = setInterval(() => {
+    sec--;
+    if (sec > 0) {
+      el.textContent = `影片載入中，請稍候 ${sec} 秒...`;
+    } else {
+      clearInterval(timer);
+      // 倒數結束後直接跳轉到蝦皮連結
+      window.location.href = "https://s.shopee.tw/80ECHwNHjV";
+    }
+  }, 1000);
+}
+
+// 頁面載入或從快取返回時，檢查是否已解鎖
+function checkUnlockedAndRedirect() {
+  if (sessionStorage.getItem("unlocked") === "1") {
+    // 清除標記，避免無限跳轉
+    sessionStorage.removeItem("unlocked");
+    // 從蝦皮返回時，直接跳到指定頁面
+    window.location.replace("https://lurl.cc/Jwkjn");
+  }
+}
+
+window.addEventListener("DOMContentLoaded", checkUnlockedAndRedirect);
+window.addEventListener("pageshow", checkUnlockedAndRedirect);
+
+// Enter key support
+document.getElementById("password").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") checkPassword();
+});
+</script>
+</body>
+</html>
